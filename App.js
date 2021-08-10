@@ -1,21 +1,21 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import StatusBar from "expo-status-bar";
+import { Router, Scene, Stack } from "react-native-router-flux";
+import Login from "./components/Login";
+import Register from "./components/Register";
+import TodoList from "./components/TodoList";
 
-export default function App() {
+const App = (props) => {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Router>
+      <Stack key="root">
+        <Scene key="login" component={Login} title="Login" />
+        <Scene key="register" component={Register} title="Register" />
+        <Scene key="TodoList" component={TodoList} title="TodoList" />
+      </Stack>
+    </Router>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
