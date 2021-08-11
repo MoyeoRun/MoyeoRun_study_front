@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import {
   Image,
   StyleSheet,
@@ -11,6 +11,14 @@ import { StackActions } from "@react-navigation/native";
 
 const Login = ({ navigation }) => {
   // navigation.dispatch(pushAction);
+  const nativeRef = useRef();
+  // let idRef = useRef();
+  const pwRef = useRef();
+
+  const [id, setId] = useState("");
+  const [password, setPassword] = useState("");
+
+  const onClick = () => {};
   return (
     <View style={styles.container}>
       <View style={styles.textContainer}>
@@ -18,14 +26,28 @@ const Login = ({ navigation }) => {
 
         <View style={styles.inputField}>
           <Text>Id</Text>
-          <TextInput style={styles.textInput} />
+          <TextInput
+            style={styles.textInput}
+            onChangeText={(id) => {
+              setId(id);
+            }}
+            value={id}
+          />
           <Text>PassWord</Text>
-          <TextInput style={styles.textInput} />
+          <TextInput
+            style={styles.textInput}
+            onChangeText={(password) => {
+              setPassword(password);
+            }}
+            value={password}
+          />
         </View>
         <View style={styles.buttonField}>
           <TouchableOpacity
+            ref={nativeRef}
             style={styles.button}
             onPress={() => {
+              console.log(id, password);
               navigation.dispatch(StackActions.replace("todolist"));
             }}
           >
