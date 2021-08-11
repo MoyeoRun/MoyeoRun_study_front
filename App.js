@@ -1,20 +1,23 @@
 import React from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import StatusBar from "expo-status-bar";
-import { Router, Scene, Stack } from "react-native-router-flux";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import TodoList from "./components/TodoList";
 
 const App = (props) => {
+  const Stack = createNativeStackNavigator();
+
   return (
-    <Router>
-      <Stack key="root">
-        <Scene key="login" component={Login} title="Login" />
-        <Scene key="register" component={Register} title="Register" />
-        <Scene key="TodoList" component={TodoList} title="TodoList" />
-      </Stack>
-    </Router>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="login" component={Login} />
+        <Stack.Screen name="register" component={Register} />
+        <Stack.Screen name="todolist" component={TodoList} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
 

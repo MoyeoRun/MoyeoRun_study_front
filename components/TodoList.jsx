@@ -1,9 +1,17 @@
 import React from "react";
-
-const Register = (props) => {
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StackActions } from "@react-navigation/native";
+const Register = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <Text>투두리스트페ㅣㅇ지</Text>
+      <Text>투두리스트페이지</Text>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.dispatch(StackActions.replace("login"));
+        }}
+      >
+        <Text> {"다쉬복귀"}</Text>
+      </TouchableOpacity>
     </View>
   );
 };
