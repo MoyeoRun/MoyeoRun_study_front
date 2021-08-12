@@ -1,7 +1,7 @@
 import React from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { StackActions } from "@react-navigation/native";
-const Register = ({ navigation }) => {
+const Register = ({}) => {
   return (
     <View style={styles.container}>
       <Text>회원가입페이지</Text>

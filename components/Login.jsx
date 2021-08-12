@@ -9,16 +9,16 @@ import {
 } from "react-native";
 import { StackActions } from "@react-navigation/native";
 
-const Login = ({ navigation }) => {
+const Login = ({ onPush }) => {
   // navigation.dispatch(pushAction);
   const nativeRef = useRef();
   // let idRef = useRef();
   const pwRef = useRef();
 
   const [id, setId] = useState("");
+
   const [password, setPassword] = useState("");
 
-  const onClick = () => {};
   return (
     <View style={styles.container}>
       <View style={styles.textContainer}>
@@ -46,10 +46,7 @@ const Login = ({ navigation }) => {
           <TouchableOpacity
             ref={nativeRef}
             style={styles.button}
-            onPress={() => {
-              console.log(id, password);
-              navigation.dispatch(StackActions.replace("todolist"));
-            }}
+            onPress={() => onPush(id, password)}
           >
             <Text style={styles.buttonText}> {"로그인"}</Text>
           </TouchableOpacity>

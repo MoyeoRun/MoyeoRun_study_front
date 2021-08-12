@@ -8,7 +8,7 @@ import {
   View,
 } from "react-native";
 import { StackActions } from "@react-navigation/native";
-const Register = ({ navigation }) => {
+const TodoList = ({}) => {
   return (
     <View style={styles.container}>
       <View style={styles.todoContainer}>
@@ -47,7 +47,7 @@ const Register = ({ navigation }) => {
     </View>
   );
 };
-export default Register;
+export default TodoList;
 const styles = StyleSheet.create({
   container: {
     display: "flex",
