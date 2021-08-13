@@ -9,13 +9,13 @@ import {
 } from "react-native";
 import { StackActions } from "@react-navigation/native";
 
-const Login = ({ onPush }) => {
+const Login = ({ onPush, onPushCheck }) => {
   // navigation.dispatch(pushAction);
   const nativeRef = useRef();
   // let idRef = useRef();
   const pwRef = useRef();
 
-  const [id, setId] = useState("");
+  const [userId, setId] = useState("");
 
   const [password, setPassword] = useState("");
 
@@ -28,10 +28,10 @@ const Login = ({ onPush }) => {
           <Text>Id</Text>
           <TextInput
             style={styles.textInput}
-            onChangeText={(id) => {
-              setId(id);
+            onChangeText={(userId) => {
+              setId(userId);
             }}
-            value={id}
+            value={userId}
           />
           <Text>PassWord</Text>
           <TextInput
@@ -46,7 +46,7 @@ const Login = ({ onPush }) => {
           <TouchableOpacity
             ref={nativeRef}
             style={styles.button}
-            onPress={() => onPush(id, password)}
+            onPress={() => onPush({ username: userId, password: password })}
           >
             <Text style={styles.buttonText}> {"로그인"}</Text>
           </TouchableOpacity>

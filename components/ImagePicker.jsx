@@ -9,7 +9,6 @@ const textstyle = {
   color: "#999",
   fontSize: 50,
   textAlign: "center",
-  // lineHeight: 1,
 };
 
 // const onClick = () => {
