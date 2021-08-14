@@ -13,8 +13,8 @@ export const register = async ({ username, password }) => {
 };
 
 export const login = async ({ username, password }) => {
-  console.log("데이터 요청시작");
-  console.log(username, password);
+  // console.log("데이터 요청시작");
+  // console.log(username, password);
   try {
     const response = await axios({
       method: "post",
@@ -24,12 +24,11 @@ export const login = async ({ username, password }) => {
         password,
       },
     });
-    console.log("데이터 받음");
+    // console.log("데이터 받음");
     return response.data;
   } catch (err) {
     console.log(err);
   }
-  console.log("완료");
 };
 
 export const logout = async () => {

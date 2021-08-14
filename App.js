@@ -26,8 +26,8 @@ const App = (props) => {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen name="login" component={LoginContainer} />
-          <Stack.Screen name="register" component={RegisterContainer} />
           <Stack.Screen name="todolist" component={TodoListContainer} />
+          <Stack.Screen name="register" component={RegisterContainer} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

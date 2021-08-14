@@ -5,7 +5,7 @@ export const getTodoList = async () => {
     method: "get",
     url: "/api/todos",
   });
-  return response;
+  return response.data;
 };
 
 export const getTodoById = async (id) => {
@@ -43,11 +43,12 @@ export const editTodo = async ({ id, content }) => {
       content,
     },
   });
-  console.log(response, "editTodo");
   return response;
 };
 
 export const toggleTodo = async (id) => {
+  console.log(id);
+  console.log("toggle api");
   const response = await axios({
     method: "patch",
     url: `/api/todos/complete/${id}`,

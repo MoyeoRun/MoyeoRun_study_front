@@ -1,14 +1,17 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Image,
   StyleSheet,
   Text,
   TextInput,
+  TouchableHighlight,
   TouchableOpacity,
   View,
 } from "react-native";
 import { StackActions } from "@react-navigation/native";
-const TodoList = ({}) => {
+const TodoList = ({ todos, onToggle, onDelete, onEdit, onCreate }) => {
+  const [content, setContent] = useState();
+
   return (
     <View style={styles.container}>
       <View style={styles.todoContainer}>
@@ -16,30 +19,60 @@ const TodoList = ({}) => {
           <View style={styles.todoTitle}>
             <Text style={styles.todoTitleText}>투두리스트</Text>
           </View>
-          <View style={styles.todoItem}>
-            <View style={styles.todoIcon}>
-              <Text>수정 </Text>
-            </View>
-            <View style={styles.todo}>
-              <Text>투두 </Text>
-            </View>
+          {todos &&
+            todos.map((todo) => (
+              <View style={styles.todoItem} key={todo.id}>
+                <View style={styles.todoIcon}>
+                  <TouchableOpacity onPress={() => onToggle(todo.id)}>
+                    {todo.isCompleted ? (
+                      <Text> 완료 </Text>
+                    ) : (
+                      <Text> 아직 </Text>
+                    )}
+                  </TouchableOpacity>
+                </View>
+                {todo.isCompleted ? (
+                  <View style={styles.todo_complete}>
+                    <TouchableOpacity
+                      onLongPress={() => {
+                        onEdit(todo.id);
+                      }}
+                    >
+                      <Text>{todo.content} </Text>
+                    </TouchableOpacity>
+                  </View>
+                ) : (
+                  <View style={styles.todo}>
+                    <TouchableOpacity onLongPress={() => onEdit(todo.id)}>
+                      <Text>{todo.content} </Text>
+                    </TouchableOpacity>
+                  </View>
+                )}
 
-            <View style={styles.todoIcon}>
-              <Text>삭제 </Text>
-            </View>
-          </View>
+                <View style={styles.todoIcon}>
+                  <TouchableHighlight onPress={() => onDelete(todo.id)}>
+                    <Text> 삭제 </Text>
+                  </TouchableHighlight>
+                </View>
+              </View>
+            ))}
         </View>
         <View style={styles.todoInputContainer}>
           <View style={styles.todoInput}>
-            <TextInput placeholder={"adsf"}> </TextInput>
+            <TextInput
+              placeholder={""}
+              value={content}
+              onChangeText={(content) => setContent(content)}
+            ></TextInput>
           </View>
           <View style={styles.todoButton}>
             <TouchableOpacity
               onPress={() => {
-                navigation.dispatch(StackActions.replace("login"));
+                onCreate(content);
+                setContent("");
               }}
             >
-              <Text style={styles.todoButtonText}> {"gooo"}</Text>
+              <Text style={styles.todoButtonText}> {"입력"}</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -84,14 +117,23 @@ const styles = StyleSheet.create({
     marginBottom: 2,
   },
   todo: {
-    flex: 1,
+    flex: 10,
     padding: 3,
     paddingHorizontal: 6,
     borderLeftWidth: 1,
     borderRightWidth: 1,
   },
+  todo_complete: {
+    flex: 10,
+    padding: 3,
+    paddingHorizontal: 6,
+    borderLeftWidth: 1,
+    borderRightWidth: 1,
+    backgroundColor: "gray",
+  },
   todoText: {},
   todoIcon: {
+    flex: 2,
     padding: 3,
   },
 

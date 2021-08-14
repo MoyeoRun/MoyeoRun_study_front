@@ -14,9 +14,7 @@ const Login = ({ onPush, onPushCheck }) => {
   const nativeRef = useRef();
   // let idRef = useRef();
   const pwRef = useRef();
-
   const [userId, setId] = useState("");
-
   const [password, setPassword] = useState("");
 
   return (

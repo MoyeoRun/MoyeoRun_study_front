@@ -1,4 +1,5 @@
 import * as todosApi from "../api/todos";
+import { put, takeLatest, takeEvery, call } from "@redux-saga/core/effects";
 
 const GET_TODOLIST = "todos/GET_TODOLIST";
 const GET_TODOLIST_SUCCESS = "todos/GET_TODOLIST_SUCCESS";
@@ -22,6 +23,88 @@ const TOGGLE_TODOLIST_FAILURE = "todos/TOGGLE_TODOLIST_FAILURE";
 
 const SET_LOADING = "todos/SET_LOADING";
 
+//초기 상태 정의
+const initState = {
+  todoList: [],
+  error: null,
+  loading: false,
+};
+
+//액션 생성함수
+export const getTodoList = () => {
+  return { type: GET_TODOLIST };
+};
+
+export const createTodo = (content) => {
+  return { type: CREATE_TODOLIST, payload: { content } };
+};
+
+export const editTodo = (id, content) => {
+  return { type: EDIT_TODOLIST, payload: { id, content } };
+};
+
+export const toggleTodo = (id) => {
+  return { type: TOGGLE_TODOLIST, payload: { id } };
+};
+export const deleteTodo = (id) => {
+  return { type: DELETE_TODOLIST, payload: { id } };
+};
+//사가 코드
+function* getTodoListSaga() {
+  try {
+    const todoListData = yield call(todosApi.getTodoList);
+    console.log(todoListData);
+    yield put({ type: GET_TODOLIST_SUCCESS, payload: todoListData });
+  } catch (e) {
+    yield put({ type: GET_TODOLIST_FAILURE });
+  }
+}
+function* createTodoSaga({ payload }) {
+  const content = payload.content;
+  try {
+    yield call(todosApi.createTodo, content);
+    yield put({ type: CREATE_TODOLIST_SUCCESS });
+  } catch (e) {
+    yield put({ type: CREATE_TODOLIST_FAILURE });
+  }
+}
+function* editTodoSaga({ payload }) {
+  const { id, content } = payload;
+  try {
+    yield call(todosApi.editTodo, { id, content });
+    yield put({ type: EDIT_TODOLIST_SUCCESS });
+  } catch (e) {
+    yield put({ type: EDIT_TODOLIST_FAILURE });
+  }
+}
+function* deleteTodoSaga({ payload }) {
+  const id = payload.id;
+  try {
+    yield call(todosApi.deleteTodo, id);
+    yield put({ type: EDIT_TODOLIST_SUCCESS });
+  } catch (e) {
+    yield put({ type: EDIT_TODOLIST_FAILURE });
+  }
+}
+function* toggleTodoSaga({ payload }) {
+  const id = payload.id;
+  try {
+    yield call(todosApi.toggleTodo, id);
+    yield put({ type: EDIT_TODOLIST_SUCCESS });
+  } catch (e) {
+    yield put({ type: EDIT_TODOLIST_FAILURE });
+  }
+}
+
+export function* todosSaga() {
+  yield takeLatest(GET_TODOLIST, getTodoListSaga);
+  yield takeLatest(CREATE_TODOLIST, createTodoSaga);
+  yield takeLatest(DELETE_TODOLIST, deleteTodoSaga);
+  yield takeLatest(EDIT_TODOLIST, editTodoSaga);
+  yield takeEvery(TOGGLE_TODOLIST, toggleTodoSaga);
+}
+//thunk 코드
+/* 
 export const getTodoList = () => async (dispatch) => {
   dispatch({ type: GET_TODOLIST });
 
@@ -32,6 +115,7 @@ export const getTodoList = () => async (dispatch) => {
     dispatch({ type: GET_TODOLIST_FAILURE, payload: e });
   }
 };
+
 
 export const createTodoList = (content) => async (dispatch) => {
   dispatch({ type: CREATE_TODOLIST });
@@ -81,13 +165,8 @@ export const toggleTodoList = (id) => async (dispatch) => {
   dispatch({ type: SET_LOADING, payload: false });
 };
 
-const initState = {
-  todoList: [],
-  error: null,
-  loading: false,
-};
-
-export default function todos(state = initState, action) {
+*/
+const todos = (state = initState, action) => {
   //todos 리듀서, 이름 파일과 동일
 
   switch (action.type) {
@@ -129,4 +208,5 @@ export default function todos(state = initState, action) {
     default:
       return state;
   }
-}
+};
+export default todos;
